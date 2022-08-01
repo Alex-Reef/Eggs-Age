@@ -3,9 +3,8 @@
 
 >**Introduction:**
 - The open repository does not have Unit AI for attacking and patrolling.
-- An open repository has only 3 AI states.
+- An open repository has only 3 AI final states.
 - The open repository does not have building construction system for user (AI have this system).
-- The automatic AI state change system has been cut from this repository. Use manual state change through code in the `AI.cs` file (lines 21-22).
 
 >**Installing:**
 - Download all files.
