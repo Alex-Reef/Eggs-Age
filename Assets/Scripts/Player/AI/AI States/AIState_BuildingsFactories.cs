@@ -8,6 +8,7 @@ public class AIState_BuildingsFactories : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Building Factories");
         if (FreePlatform())
         {
             SelectBuild(freePlatforms[SelectPlatform()]);
@@ -48,6 +49,8 @@ public class AIState_BuildingsFactories : MonoBehaviour
                     Debug.Log("Mine");
                     GameObject build = BuildsController.Instance.Builds.Find(x => x.GetComponent<Build>().BuildType == BuildsController.BuildType.Mine);
                     platform.GetComponent<Platform>().Building(build);
+                    if(Player.GetComponent<Player>().Money >= 8)
+                        Player.GetComponent<Player>().AddMoney(-8);
                     break;
                 }
             case BuildsController.PlatformType.City:
@@ -56,6 +59,8 @@ public class AIState_BuildingsFactories : MonoBehaviour
                     var builds = BuildsController.Instance.Builds.FindAll(x => x.GetComponent<Build>().BuildType != BuildsController.BuildType.Mine);
                     int select = Random.Range(0, builds.Count);
                     platform.GetComponent<Platform>().Building(builds[select]);
+                    if(Player.GetComponent<Player>().Money >= 8)
+                        Player.GetComponent<Player>().AddMoney(-8);
                     break;
                 }
             case BuildsController.PlatformType.Ocean:
@@ -63,6 +68,8 @@ public class AIState_BuildingsFactories : MonoBehaviour
                     Debug.Log("Ocean");
                     GameObject build = BuildsController.Instance.Builds.Find(x => x.GetComponent<Build>().BuildType == BuildsController.BuildType.Mine);
                     platform.GetComponent<Platform>().Building(build);
+                    if(Player.GetComponent<Player>().Money >= 8)
+                        Player.GetComponent<Player>().AddMoney(-8);
                     break;
                 }
         }
