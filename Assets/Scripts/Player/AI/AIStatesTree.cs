@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class AIStatesTree
 {
-    public List<AIStatesNode> states;
+    public AIStatesNode states;
 
     public AIStatesTree()
     {
-        states = new List<AIStatesNode>();
+        states = new AIStatesNode();
     }
 
     public void Add(AIStatesNode item)
@@ -17,74 +17,50 @@ public class AIStatesTree
 
     public enum AIState
     {
-        Foreign_Policy,
         Internal_Policy,
         Amplification,
         Development,
-        Agressive,
-        Peaseful,
-        Technology,
         Economic,
-        City_Defense,
         Army,
-        Millitary_Operations,
-        Deterioration_Of_Relations,
-        Strengthening_Relationships,
-        Union,
-        Expeditions,
-        Construction_Of_Scientific_Buildings,
         Capturing_The_Mines,
         Building_Factories,
-        Trade,
-        Millitary,
-        Opening_The_State_Border,
-        Send_A_Gift,
-        Strengthening_Buildings,
-        Turret_Building,
         Hiring_Units,
-        Unit_Upgrade,
-        Mine_Blocking,
-        War,
-        Insult,
-        Closing_The_State_Border
     }
 
-    public AIState GetState(List<AIStatesNode> States)
+    public AIState GetState(AIStatesNode States)
     {
-        int select = Random.Range(0, States.Count);
-        if (States[select].GetStatesNode().Count == 0)
-            return States[select].GetCurentState();
-        else
-            return GetState(States[select].GetStatesNode());
+        if(States.states.Count == 0)
+            return States.state;
+        else{
+            int select = Random.Range(0, States.states.Count);
+            return GetState(States.states[select]);
+        }
     }
 
     public void BuildTree()
     {
-        AIStatesNode foreignPol = new AIStatesNode();
-        foreignPol.state = AIState.Foreign_Policy;
-
         AIStatesNode internalPol = new AIStatesNode();
         internalPol.state = AIState.Internal_Policy;
 
         internalPol.Add(BuildANodeOfDevelopment());
+        internalPol.Add(BuildANodeOfAmplification());
 
-        states.Add(internalPol);
-        states.Add(foreignPol);
+        states.Add(internalPol);  
     }
 
-    private void BuildANodeOfAggression()
+    private AIStatesNode BuildANodeOfAmplification()
     {
+        AIStatesNode newState = new AIStatesNode();
+        newState.state = AIState.Amplification;
 
-    }
+        AIStatesNode node = new AIStatesNode();
+        node.state = AIState.Army;
+        newState.Add(node);
 
-    private void BuildANodeOfPeaseful()
-    {
+        node.state = AIState.Hiring_Units;
+        newState.Add(node);
 
-    }
-
-    private void BuildANodeOfAmplification()
-    {
-
+        return newState;
     }
 
     private AIStatesNode BuildANodeOfDevelopment()
@@ -94,9 +70,15 @@ public class AIStatesTree
 
         AIStatesNode node = new AIStatesNode();
         node.state = AIState.Economic;
-        newState.Add(node);
 
-        node.state = AIState.Capturing_The_Mines;
+        AIStatesNode subNode1 = new AIStatesNode();
+        subNode1.state = AIState.Capturing_The_Mines;
+        node.Add(subNode1);
+
+        AIStatesNode subNode2 = new AIStatesNode();
+        subNode2.state = AIState.Building_Factories;
+        node.Add(subNode2);
+
         newState.Add(node);
 
         return newState;
