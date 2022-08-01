@@ -5,9 +5,10 @@ public class AIState_HiringUnits : MonoBehaviour
     public GameObject Player;
     void Start()
     {
+        Debug.Log("Hiring Units");
         Transform pos = SelectingBuild();
         GameObject unit = SelectingUnit();
-        if(pos && unit)
+        if (pos && unit)
             HiringUnit(pos, unit);
     }
 
@@ -15,16 +16,19 @@ public class AIState_HiringUnits : MonoBehaviour
     private Transform SelectingBuild()
     {
         var builds = Player.GetComponent<Player>().Platforms.FindAll(x => x.GetComponent<Platform>().Build);
-        builds = builds.FindAll(x => x.GetComponent<Platform>().Build.GetComponent<Build>().BuildType == BuildsController.BuildType.Barracks);
         if (builds.Count > 0)
         {
-            int select = Random.Range(0, builds.Count);
-            Transform pos = builds[select].transform;
-            return pos;
+            builds = builds.FindAll(x => x.GetComponent<Platform>().Build.GetComponent<Build>().BuildType == BuildsController.BuildType.Barracks);
+            if (builds.Count > 0)
+            {
+                int select = Random.Range(0, builds.Count);
+                Transform pos = builds[select].transform;
+                return pos;
+            }
         }
         return null;
     }
-    
+
     // Selecting unit for spawn
     private GameObject SelectingUnit()
     {
@@ -40,5 +44,7 @@ public class AIState_HiringUnits : MonoBehaviour
         GameObject newUnit = Instantiate(unit, spawnPos, Quaternion.identity);
         newUnit.GetComponent<Unit>().OwnerPlayer = Player;
         Player.GetComponent<Player>().Units.Add(newUnit);
+        if(Player.GetComponent<Player>().Money >= 10)
+            Player.GetComponent<Player>().AddMoney(-10);
     }
 }
