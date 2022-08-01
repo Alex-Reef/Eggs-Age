@@ -13,7 +13,7 @@
 
 >**Project have:**
 - Unit prefabs with movement system (user can be select units via right mouse button click or drag) and set position for moving (by left mouse button click).
-- AI can be selecting, building construction, capturing platforms and hiring units.
+- AI can selecting, building construction, capturing platforms and hiring units.
 - Movement of the camera is carried out through the holding of the left mouse button, as well as the WSAD buttons.
 
 >**Info:**
