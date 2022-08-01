@@ -17,11 +17,12 @@ public class AI : MonoBehaviour
 
     private void CheckState()
     {
+        Debug.Log("Selecting");
         // For testing only one state
-        RemoveAllStates();
-        gameObject.AddComponent<AIState_BuildingsFactories>();
-        gameObject.GetComponent<AIState_BuildingsFactories>().Player = player;
-        /*
+        //RemoveAllStates();
+        //gameObject.AddComponent<AIState_BuildingsFactories>();
+        //gameObject.GetComponent<AIState_BuildingsFactories>().Player = player;
+        
         AIStatesTree tree = new AIStatesTree();
         tree.BuildTree();
         AIStatesTree.AIState selectState = tree.GetState(tree.states);
@@ -31,9 +32,24 @@ public class AI : MonoBehaviour
                 {
                     RemoveAllStates();
                     gameObject.AddComponent<AIState_CaptMines>();
+                    gameObject.GetComponent<AIState_CaptMines>().Player = player;
                     break;
                 }
-        }*/
+            case AIStatesTree.AIState.Building_Factories:
+                {
+                    RemoveAllStates();
+                    gameObject.AddComponent<AIState_BuildingsFactories>();
+                    gameObject.GetComponent<AIState_BuildingsFactories>().Player = player;
+                    break;
+                }
+            case AIStatesTree.AIState.Hiring_Units:
+                {
+                    RemoveAllStates();
+                    gameObject.AddComponent<AIState_HiringUnits>();
+                    gameObject.GetComponent<AIState_HiringUnits>().Player = player;
+                    break;
+                }
+        }
     }
 
     private bool FreePlatform()
