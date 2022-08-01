@@ -13,6 +13,25 @@ public class Player : MonoBehaviour
     {
         Money = 0;
         Init();
+        InvokeRepeating("PayDay", 2, 2);
+    }
+
+    public void AddMoney(int money)
+    {
+        Money += money;
+    }
+
+    private void PayDay()
+    {
+        int money = 5;
+        foreach (var platform in Platforms)
+        {
+            if (platform.GetComponent<Platform>().Build
+            && platform.GetComponent<Platform>().Build.GetComponent<Build>().BuildType == BuildsController.BuildType.Mine)
+                money += 5;
+        }
+        money -= Units.Count * 2;
+        Money += money;
     }
 
     private void OnDestroy()
@@ -23,7 +42,7 @@ public class Player : MonoBehaviour
 
     private void Init()
     {
-        foreach(var platform in BuildsController.Instance.Platforms)
+        foreach (var platform in BuildsController.Instance.Platforms)
         {
             if (platform.GetComponent<Platform>().OwnerPlayer)
             {
